@@ -1,0 +1,112 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{roadsigns}[LaTeX package to for roadsigns]
+
+\RequirePackage{tikz}
+
+\usetikzlibrary{spath3,intersections}
+
+\newcommand{\interstate}[1]{%
+  \begin{tikzpicture}[x=1em,y=1em]
+    \useasboundingbox (-1.5,-1.5) rectangle (1.5,1.5);
+    % framing
+    \path[spath/save=circleBR] (0.2,0.1) circle (0.9);
+    \path[spath/save=circleBL] (-0.2,0.1) circle (0.9);
+    \path[spath/save=circleTR] (0.3,1.5) circle (0.9);
+    \path[spath/save=circleTL] (-0.3,1.5) circle (0.9);
+
+    % spath operations
+    \tikzset
+    {
+      % splitting
+      spath/split at intersections={circleTR}{circleTL},
+      spath/split at intersections={circleTR}{circleBL},
+      spath/split at intersections={circleBR}{circleTL},
+      spath/split at intersections={circleBR}{circleBL},
+      % save components
+      spath/get components of={circleTR}\cTR,
+      spath/get components of={circleBR}\cBR,
+      spath/get components of={circleTL}\cTL,
+      spath/get components of={circleBL}\cBL,
+    }
+
+    % shield
+    \draw[
+      spath/use=\getComponentOf\cTR{4},
+      spath/use={\getComponentOf\cBL{5},reverse,weld},
+      spath/use={\getComponentOf\cBR{4},reverse,weld},
+      spath/use={\getComponentOf\cTL{3},weld},
+      spath/adjust and close=current,
+    ];
+
+    \node at (0,0) {\sffamily#1};
+  \end{tikzpicture}
+  }
+
+\newcommand{\highway}[1]{%
+  \begin{tikzpicture}[x=1em,y=1em]
+    \useasboundingbox (-1.5,-1.5) rectangle (1.5,1.5);
+    % framing, numbering is based off aboslute height
+    \path[spath/save=circle1R] (0.217,1.077) circle (0.390);
+    \path[spath/save=circle2R] (0.976,0.263) circle (0.40);
+    \path[spath/save=circle3R] (0.35,-0.15) circle (0.35);
+    \path[spath/save=circle4R] (0.35,-1.125) circle (0.625);
+    \path[spath/save=connectorR] (0.217,1.077) -- (0.976,0.263);
+    \path[spath/save=splitter1R] (0.976,0.263) -- (0.35,-0.15);
+    \path[spath/save=splitter2R] (0.35,-0.15) -- (0.35,-1.125);
+    \path[spath/save=circle1L] (-0.217,1.077) circle (0.390);
+    \path[spath/save=circle2L] (-0.976,0.263) circle (0.40);
+    \path[spath/save=circle3L] (-0.35,-0.15) circle (0.35);
+    \path[spath/save=circle4L] (-0.35,-1.125) circle (0.625);
+    \path[spath/save=connectorL] (-0.217,1.077) -- (-0.976,0.263);
+    \path[spath/save=splitter1L] (-0.976,0.263) -- (-0.35,-0.15);
+    \path[spath/save=splitter2L] (-0.35,-0.15) -- (-0.35,-1.125);
+
+    % spath operations
+    \tikzset
+    {
+      % splitting
+      spath/split at intersections={circle1R}{circle1L},
+      spath/split at intersections={circle1R}{connectorR},
+      spath/split at intersections={circle1L}{connectorL},
+      spath/split at intersections={circle2R}{connectorR},
+      spath/split at intersections={circle2L}{connectorL},
+      spath/split at intersections={circle2R}{splitter1R},
+      spath/split at intersections={circle2L}{splitter1L},
+      spath/split at intersections={circle3R}{splitter1R},
+      spath/split at intersections={circle3L}{splitter1L},
+      spath/split at intersections={circle3R}{splitter2R},
+      spath/split at intersections={circle3L}{splitter2L},
+      spath/split at intersections={circle4R}{splitter2R},
+      spath/split at intersections={circle4L}{splitter2L},
+      spath/split at intersections={circle4R}{circle4L},
+      % save components
+      spath/get components of={circle1R}\cOneR,
+      spath/get components of={circle1L}\cOneL,
+      spath/get components of={connectorR}\cConnectorR,
+      spath/get components of={connectorL}\cConnectorL,
+      spath/get components of={circle2R}\cTwoR,
+      spath/get components of={circle2L}\cTwoL,
+      spath/get components of={circle3R}\cThreeR,
+      spath/get components of={circle3L}\cThreeL,
+      spath/get components of={circle4R}\cFourR,
+      spath/get components of={circle4L}\cFourL,
+    }
+
+    \draw[
+      spath/use={\getComponentOf\cOneR{3}},
+      spath/use={\getComponentOf\cConnectorR{2},weld},
+      spath/use={\getComponentOf\cTwoR{2},weld},
+      spath/use={\getComponentOf\cThreeR{3},reverse,weld},
+      spath/use={\getComponentOf\cFourR{2},weld},
+      spath/use={\getComponentOf\cFourL{4},weld},
+      spath/use={\getComponentOf\cThreeL{2},reverse,weld},
+      spath/use={\getComponentOf\cTwoL{3},weld},
+      spath/use={\getComponentOf\cConnectorL{2},reverse,weld},
+      spath/use={\getComponentOf\cOneL{3},weld},
+      spath/adjust and close=current,
+    ];
+
+
+    \node at (0,0) {\sffamily#1};
+  \end{tikzpicture}
+  }
