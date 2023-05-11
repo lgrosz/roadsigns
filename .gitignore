@@ -1,0 +1,4 @@
+# LaTeX compile artifacts
+*.aux
+*.pdf
+*.log
