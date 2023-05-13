@@ -199,3 +199,23 @@
   \end{tikzpicture}
   }
 
+
+\newcommand{\statehighway}[1]{%
+  \begin{tikzpicture}[x=1em,y=1em]
+    \path[spath/save=top] (-0.5,0.6) -- (0.5,0.6);
+    \path[spath/save=right] (0.5,0.6) arc (90:-90:0.6);
+    \path[spath/save=bottom] (0.5,-0.6) -- (-0.5,-0.6);
+    \path[spath/save=left] (-0.5,-0.6) arc (270:90:0.6);
+
+    \draw[
+      spath/use={top},
+      spath/use={right,weld},
+      spath/use={bottom,weld},
+      spath/use={left,weld},
+      spath/adjust and close=current,
+    ];
+
+    \node {\sffamily#1};
+  \end{tikzpicture}
+  }
+
