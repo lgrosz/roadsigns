@@ -1,4 +1,11 @@
 # LaTeX compile artifacts
 *.aux
-*.pdf
+*.dvi
+*.glo
+*.gls
+*.hd
+*.idx
 *.log
+*.out
+*.pdf
+*.sty
