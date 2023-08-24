@@ -38,7 +38,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{156}
+% \CheckSum{162}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -58,6 +58,7 @@
 %
 %
 % \changes{v1.0}{2023/05/14}{Initial version}
+% \changes{v1.1}{2023/08/24}{Added parking symbol}
 %
 % \GetFileInfo{roadsigns.sty}
 %
@@ -96,6 +97,9 @@
 % \DescribeMacro{\statehighway\marg{text}}
 % This macro draws a generic state highway ``pill." This
 % image supports both 2 and 3 digit highway numbers.
+%
+% \DescribeMacro{\parking}
+% This macro draws a parking sign with a simple ``P".
 %
 % \StopEventually{\PrintChanges}
 %
@@ -376,6 +380,17 @@
       spath/adjust and close=current,
     ];
     \node {\sffamily#1};
+  \end{tikzpicture}
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\parking}
+% A simple parking, ``P," sign.
+%    \begin{macrocode}
+\newcommand{\parking}{%
+  \begin{tikzpicture}[x=1em,y=1em]
+    \node at (0, 0) [rectangle,fill=white,draw=black,rounded corners=0.25em] {\sffamily P};
   \end{tikzpicture}
   }
 %    \end{macrocode}
